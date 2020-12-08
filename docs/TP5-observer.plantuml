@@ -1,0 +1,62 @@
+@startuml
+
+class JPanel
+interface ActionListener
+interface ChangeListener
+
+
+interface Observer{
+    void update(Observable o)
+}
+
+class BarChartObserver [[java:main.java.observer.pattern.BarChartObserver]] {
+	-Vector<CourseRecord> courseData
+	+BarChartObserver(CourseData data)
+	+void paint(Graphics g)
+	+void update(Observable o)
+}
+
+class CourseController [[java:main.java.observer.pattern.CourseController]] {
+	-Vector<JSlider> sliders
+	-JPanel coursePanel
+	+CourseController(CourseData courseData)
+	+void addCourse(CourseRecord courseRecord)
+	+void update(Observable o)
+	+void actionPerformed(ActionEvent arg0)
+	+void stateChanged(ChangeEvent arg0)
+	+void main(String[] args)
+}
+
+abstract class Observable [[java:main.java.observer.pattern.Observable]] {
+	-Vector<Observer> observers
+	-JPanel coursePanel
+	+Observable()
+	+void attach(Observer o)
+	+void detach(Observer o)
+	+void notifyObservers()
+	+Object getUpdate()
+}
+
+class CourseData [[java:main.java.observer.pattern.CourseData]] {
+	#Vector<CourseRecord> courseData
+	+CourseData()
+	+void addCourseRecord(CourseRecord courseRecord)
+	+void changeCourseRecord(String subjectName, int numOfStudents)
+	+Vector<CourseRecord> getUpdate()
+}
+
+JPanel <|-- BarChartObserver
+Observer <|.. BarChartObserver
+
+JPanel <|-- CourseController
+Observer <|.. CourseController
+ActionListener <|.. CourseController
+ChangeListener <|.. CourseController
+CourseData "1" <-- CourseController : courseData
+
+Observable <|-- CourseData
+
+
+
+
+@enduml
