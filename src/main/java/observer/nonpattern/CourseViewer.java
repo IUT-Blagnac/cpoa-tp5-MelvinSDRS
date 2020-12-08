@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -131,6 +132,8 @@ public class CourseViewer extends JFrame implements ActionListener,
 
 	public void paint(Graphics g) {
 		super.paint(g);
+
+		//bar chart
 		LayoutConstants.paintBarChartOutline(g, sliders.size());
 		for (int i = 0; i < sliders.size(); i++) {
 			JSlider record = sliders.elementAt(i);
@@ -149,6 +152,26 @@ public class CourseViewer extends JFrame implements ActionListener,
 							* LayoutConstants.barSpacing + i
 							* LayoutConstants.barWidth, LayoutConstants.yOffset
 							+ LayoutConstants.graphHeight + 20);
+		}
+
+		//pie chart
+		int radius = 100;
+		ArrayList<Integer> tab = new ArrayList<>();
+		for (int i = 0; i < sliders.size(); i++) {
+			tab.add(sliders.elementAt(i).getValue());
+		}
+		double total = 0.0;
+		for (int i = 0; i < tab.size(); i++) {
+			total += tab.get(i);
+		}
+		if (total != 0) {
+			double startAngle = 0.0;
+			for (int i = 0; i < tab.size(); i++) {
+				double ratio = (tab.get(i) / total) * 360.0;
+				g.setColor(LayoutConstants.courseColours[i % LayoutConstants.courseColours.length]);
+				g.fillArc(LayoutConstants.xOffset, LayoutConstants.yOffset + 300, 2 * radius, 2 * radius, (int) startAngle, (int) ratio);
+				startAngle += ratio;
+			}
 		}
 	}
 

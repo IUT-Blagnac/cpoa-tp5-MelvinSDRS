@@ -23,7 +23,7 @@ check:
 	mvn test
 	gradle test
 	ruby tests/testfix0.rb README.adoc 
-	ruby tests/checkModel.rb docs/classDiagam.plantuml 
+	ruby tests/checkModel.rb docs/classDiagam.plantuml
 
 badge:
 	@echo "========================================"
