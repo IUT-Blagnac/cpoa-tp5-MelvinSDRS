@@ -3,6 +3,7 @@ package observer.pattern;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -40,19 +41,18 @@ public class BarChartObserver extends JPanel implements Observer {
 	 */
 	public void paint(Graphics g) {
 		super.paint(g);
+		//bar chart
 		LayoutConstants.paintBarChartOutline(g, this.courseData.size());
 		for (int i = 0; i < courseData.size(); i++) {
 			CourseRecord record = (CourseRecord) courseData.elementAt(i);
-			g.setColor(Color.blue);
+			g.setColor(LayoutConstants.courseColours[i]);
 			g.fillRect(
 					LayoutConstants.xOffset + (i + 1)
 							* LayoutConstants.barSpacing + i
 							* LayoutConstants.barWidth, LayoutConstants.yOffset
 							+ LayoutConstants.graphHeight
-							- LayoutConstants.barHeight
-							+ 2
-							* (LayoutConstants.maxValue - record
-									.getNumOfStudents()),
+							- LayoutConstants.barHeight + 2
+							* (LayoutConstants.maxValue - record.getNumOfStudents()),
 					LayoutConstants.barWidth, 2 * record.getNumOfStudents());
 			g.setColor(Color.red);
 			g.drawString(record.getName(),
