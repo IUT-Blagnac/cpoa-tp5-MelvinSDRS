@@ -47,6 +47,16 @@ public abstract class Observable {
 	}
 
 	/**
+	 * Notify all Observers that Subject has changed
+	 */
+	public void notifyObservers(Object param) {
+		for (int i = 0; i < observers.size(); i++) {
+			Observer observer = observers.elementAt(i);
+			observer.update(param);
+		}
+	}
+
+	/**
 	 * Pull updated data from this Subject
 	 * 
 	 * @return the updated data from the Subject

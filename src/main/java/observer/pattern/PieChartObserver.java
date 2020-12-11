@@ -69,5 +69,13 @@ public class PieChartObserver extends JPanel implements Observer {
         this.repaint();
     }
 
+    @Override
+    public void update(Object o) {
+        this.courseData = (Vector<CourseRecord>) o;
+
+        this.revalidate();
+        this.repaint();
+    }
+
     private Vector<CourseRecord> courseData;
 }
