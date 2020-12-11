@@ -86,9 +86,18 @@ public class BarChartObserver extends JPanel implements Observer {
 	 *
 	 * @param o the observed CourseData object that has changed
 	 */
-	@Override
 	public void update(Object o) {
-		this.courseData = (Vector<CourseRecord>) o;
+		CourseRecord record = (CourseRecord) o;
+
+		boolean contain = false;
+		for (CourseRecord courseRecord : courseData)
+			if (courseRecord.getName().equals(record.getName())){
+				courseRecord.setNumOfStudents(record.getNumOfStudents());
+				contain = true;
+			}
+
+		if (!contain)
+			courseData.add(record);
 
 		this.setPreferredSize(new Dimension(2 * LayoutConstants.xOffset
 				+ (LayoutConstants.barSpacing + LayoutConstants.barWidth)

@@ -5,7 +5,6 @@ import observer.LayoutConstants;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class PieChartObserver extends JPanel implements Observer {
@@ -71,7 +70,18 @@ public class PieChartObserver extends JPanel implements Observer {
 
     @Override
     public void update(Object o) {
-        this.courseData = (Vector<CourseRecord>) o;
+        CourseRecord record = (CourseRecord) o;
+
+        boolean contain = false;
+        for (CourseRecord courseRecord : courseData) {
+            if (courseRecord.getName().equals(record.getName())) {
+                courseRecord.setNumOfStudents(record.getNumOfStudents());
+                contain = true;
+            }
+        }
+
+        if (!contain)
+            courseData.add(record);
 
         this.revalidate();
         this.repaint();
