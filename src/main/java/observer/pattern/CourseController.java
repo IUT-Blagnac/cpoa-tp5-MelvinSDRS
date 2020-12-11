@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -44,6 +45,8 @@ public class CourseController extends JPanel implements Observer, ChangeListener
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.BOTH;
+		Types.add(ObserverType.CREATE);
+		Types.add(ObserverType.REMOVE);
 		courses.attach(this);
 		Vector<CourseRecord> state = courses.getUpdate();
 
@@ -123,6 +126,11 @@ public class CourseController extends JPanel implements Observer, ChangeListener
 		this.addCourse(record);
 	}
 
+	@Override
+	public ArrayList<ObserverType> getTypes() {
+		return Types;
+	}
+
 
 	/**
 	 * Manages the creation of a new course. Called when the "New Course" button is pressed.
@@ -198,6 +206,8 @@ public class CourseController extends JPanel implements Observer, ChangeListener
 		frame.pack();
 		frame.setVisible(true);
 	}
+
+	ArrayList<ObserverType> Types = new ArrayList<>();
 
 	private CourseData courseData;
 

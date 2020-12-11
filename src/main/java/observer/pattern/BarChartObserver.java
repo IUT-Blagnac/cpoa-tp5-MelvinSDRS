@@ -24,6 +24,9 @@ public class BarChartObserver extends JPanel implements Observer {
 	 *            a CourseData object to observe
 	 */
 	public BarChartObserver(CourseData data) {
+		Types.add(ObserverType.CREATE);
+		Types.add(ObserverType.UPDATE);
+		Types.add(ObserverType.REMOVE);
 		data.attach(this);
 		this.courseData = data.getUpdate();
 		this.setPreferredSize(new Dimension(2 * LayoutConstants.xOffset
@@ -107,5 +110,11 @@ public class BarChartObserver extends JPanel implements Observer {
 		this.repaint();
 	}
 
+	@Override
+	public ArrayList<ObserverType> getTypes() {
+		return Types;
+	}
+
+	ArrayList<ObserverType> Types = new ArrayList<>();
 	private Vector<CourseRecord> courseData;
 }

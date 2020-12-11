@@ -5,6 +5,7 @@ import observer.LayoutConstants;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class PieChartObserver extends JPanel implements Observer {
@@ -15,6 +16,9 @@ public class PieChartObserver extends JPanel implements Observer {
      *            a CourseData object to observe
      */
     public PieChartObserver(CourseData data) {
+        Types.add(ObserverType.CREATE);
+        Types.add(ObserverType.UPDATE);
+        Types.add(ObserverType.REMOVE);
         data.attach(this);
         this.courseData = data.getUpdate();
         this.setPreferredSize(new Dimension(2 * LayoutConstants.xOffset
@@ -86,6 +90,13 @@ public class PieChartObserver extends JPanel implements Observer {
         this.revalidate();
         this.repaint();
     }
+
+    @Override
+    public ArrayList<ObserverType> getTypes() {
+        return Types;
+    }
+
+    ArrayList<ObserverType> Types = new ArrayList<>();
 
     private Vector<CourseRecord> courseData;
 }
